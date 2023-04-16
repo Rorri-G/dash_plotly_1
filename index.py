@@ -58,7 +58,8 @@ app.layout = html.Div([
         ], className='create_container2 eight columns'),
         # this is a second grafic
         html.Div([
-            dcc.Graph(id='pie_graph', figure={})
+            dcc.Graph(id='pie_graph', figure={}, style={
+                      'height': '500px', 'width': '50%'})
         ], className='create_container2 five columns')
     ], className='row flex-display'),
 
@@ -74,12 +75,14 @@ def update_graph(value):
         fig = px.bar(
             data_frame=df,
             x='jurisdiccion_nombre',
-            y='primera_dosis_cantidad')
+            y='primera_dosis_cantidad',
+            color_discrete_sequence=['#1f77b4'])
     else:
         fig = px.bar(
             data_frame=df,
             x='jurisdiccion_nombre',
-            y='segunda_dosis_cantidad')
+            y='segunda_dosis_cantidad',
+            color_discrete_sequence=['#3341FF'])
     return fig
 
 
