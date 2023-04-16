@@ -53,7 +53,8 @@ app.layout = html.Div([
     # this is a first grafic
     html.Div([
         html.Div([
-            dcc.Graph(id='my_graph', figure={})
+            dcc.Graph(id='my_graph', figure={}, style={
+                      'height': '500px', 'width': '50%'})
         ], className='create_container2 eight columns'),
         # this is a second grafic
         html.Div([
