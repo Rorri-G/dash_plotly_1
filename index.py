@@ -11,42 +11,42 @@ df = pd.read_csv(
 # print(df.vacuna_nombre.nunique())
 # print(df.vacuna_nombre.nunique())
 
+
 app = dash.Dash(__name__)
 
-# Agrega un enlace al archivo CSS
-app.css.append_css({
-    'external_url': '/dash_plot_proyetc/stylesheet.css'
-
-})
-
 colors = {
-    'background': '#E3FF33',
+    'background': '#E2EE38',
     'text': '#111111'
 }
 
 app.layout = html.Div([
     html.Div([
         html.H1('Vacunados por covid', style={
-            'backgroundColor': colors['background'],
-            'textAlign': 'center',
-            'color': colors['text']
-        }),
-        html.Img(src='assets/images.jpeg')
+                'backgroundColor': colors['background'],
+                'textAlign': 'center',
+                'color': colors['text']
+                }),
+        html.Img(src='assets/images.jpeg',
+                 style={'float': 'center',
+                        'margin-bottom': '5px', 'width': 'auto', 'border': 'none'})
     ], className='banner'),
     # this is a box selection
     html.Div([
         html.Div([
             html.P('Selecciona la dosis', className='fix_label',
-                   style={'color': 'black', 'margin-top': '2px'}),
+                   style={
+                       'float': 'center',
+                       'color': 'black', 'margin-top': '2px'}),
             dcc.RadioItems(id='dosis-radioitems',
                            labelStyle={'display': 'inline-block'},
                            options=[
                                {'label': 'Primera dosis',
-                                   'value': 'primera_dosis_cantidad'},
+                                'value': 'primera_dosis_cantidad'},
                                {'label': 'Segunda dosis',
-                                   'value': 'segunda_dosis_cantidad'}
+                                'value': 'segunda_dosis_cantidad'}
                            ], value='primera_dosis_cantidad',
-                           style={'text-aling': 'center', 'color': 'black'},
+                           style={'text-aling': 'center',
+                                  'color': 'black'},
                            className='dcc_compon'),
         ], className='create_container2 five columns', style={'margin-bottom': '20px'}),
     ], className='row flex-display'),
@@ -54,12 +54,13 @@ app.layout = html.Div([
     html.Div([
         html.Div([
             dcc.Graph(id='my_graph', figure={}, style={
-                      'height': '500px', 'width': '50%'})
+                'height': '500px', 'width': '100%'})
         ], className='create_container2 eight columns'),
+
         # this is a second grafic
         html.Div([
             dcc.Graph(id='pie_graph', figure={}, style={
-                      'height': '500px', 'width': '50%'})
+                'height': '500px', 'width': '100%'})
         ], className='create_container2 five columns')
     ], className='row flex-display'),
 
@@ -76,13 +77,13 @@ def update_graph(value):
             data_frame=df,
             x='jurisdiccion_nombre',
             y='primera_dosis_cantidad',
-            color_discrete_sequence=['#1f77b4'])
+            color_discrete_sequence=['#1f77b4'])  # Cambia el color de las barras
     else:
         fig = px.bar(
             data_frame=df,
             x='jurisdiccion_nombre',
             y='segunda_dosis_cantidad',
-            color_discrete_sequence=['#3341FF'])
+            color_discrete_sequence=['#3341FF'])  # Cambia el color de las barras
     return fig
 
 
@@ -90,12 +91,12 @@ def update_graph(value):
     Output('pie_graph', component_property='figure'),
     [Input('dosis-radioitems', component_property='value')])
 def update_graph_pie(value):
-
     if value == 'primera_dosis_cantidad':
         fig2 = px.pie(
             data_frame=df,
             names='jurisdiccion_nombre',
-            values='primera_dosis_cantidad')
+            values='primera_dosis_cantidad'
+        )
     else:
         fig2 = px.pie(
             data_frame=df,
@@ -103,6 +104,13 @@ def update_graph_pie(value):
             values='segunda_dosis_cantidad')
     return fig2
 
+
+# Agrega un enlace al archivo CSS
+app.css.append_css({
+    'external_url': '/dash_plot_proyetc/stylesheet.css'
+})
+
+# app.css.append_css(dict(external_url='http://localhost/style.css'))
 
 if __name__ == ('__main__'):
     app.run_server(debug=True)
