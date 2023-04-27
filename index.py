@@ -27,15 +27,16 @@ app.layout = html.Div([
                 'color': colors['text']
                 }),
         html.Img(src='assets/images.jpeg',
-                 style={'float': 'center',
-                        'margin-bottom': '5px', 'width': 'auto', 'border': 'none'})
+                 style={'margin-bottom': '5px',
+                        'display': 'inline-block',
+                        'width': '9%', 'border': 'none'})
     ], className='banner'),
     # this is a box selection
     html.Div([
         html.Div([
             html.P('Selecciona la dosis', className='fix_label',
                    style={
-                       'float': 'center',
+                       'float': 'lefth',
                        'color': 'black', 'margin-top': '2px'}),
             dcc.RadioItems(id='dosis-radioitems',
                            labelStyle={'display': 'inline-block'},
@@ -48,23 +49,23 @@ app.layout = html.Div([
                            style={'text-aling': 'center',
                                   'color': 'black'},
                            className='dcc_compon'),
-        ], className='create_container2 five columns', style={'margin-bottom': '20px'}),
-    ], className='row flex-display'),
+        ], className='create_container_1', style={'margin-bottom': '2px'}),
+    ], className='row'),
     # this is a first grafic
     html.Div([
         html.Div([
             dcc.Graph(id='my_graph', figure={}, style={
                 'height': '500px', 'width': '100%'})
-        ], className='create_container2 eight columns'),
+        ], className='create_container_1'),
 
         # this is a second grafic
         html.Div([
             dcc.Graph(id='pie_graph', figure={}, style={
                 'height': '500px', 'width': '100%'})
-        ], className='create_container2 five columns')
-    ], className='row flex-display'),
+        ], className='create_container_1')
+    ], className='row'),
 
-], id='mainContainer', style={'display': 'flex', 'flex-direction': 'column'})
+], id='mainContainer', style={'width': '100%', 'flex-direction': 'column', 'display': 'flex'})
 
 
 @app.callback(
