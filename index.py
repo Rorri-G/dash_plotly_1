@@ -5,7 +5,7 @@ import pandas as pd
 from dash.dependencies import Input, Output
 
 df = pd.read_csv(
-    '/Users/biorgan/Development/development/dash_plot_proyetc/Covid19VacunasAgrupadas.csv')
+    '/Users/biorgan/Development/development/dash_plot_proyetc/Covid19VacunasEcuador.csv')
 
 # print(df)
 # print(df.vacuna_nombre.nunique())
@@ -42,10 +42,10 @@ app.layout = html.Div([
                            labelStyle={'display': 'inline-block'},
                            options=[
                                {'label': 'Primera dosis',
-                                'value': 'primera_dosis_cantidad'},
+                                'value': 'primera_dosis'},
                                {'label': 'Segunda dosis',
-                                'value': 'segunda_dosis_cantidad'}
-                           ], value='primera_dosis_cantidad',
+                                'value': 'segunda_dosis'}
+                           ], value='primera_dosis',
                            style={'text-aling': 'center',
                                   'color': 'black'},
                            className='dcc_compon'),
@@ -73,17 +73,17 @@ app.layout = html.Div([
     [Input('dosis-radioitems', component_property='value')])
 def update_graph(value):
 
-    if value == 'primera_dosis_cantidad':
+    if value == 'primera_dosis':
         fig = px.bar(
             data_frame=df,
-            x='jurisdiccion_nombre',
-            y='primera_dosis_cantidad',
+            x='provincia',
+            y='primera_dosis',
             color_discrete_sequence=['#1f77b4'])  # Cambia el color de las barras
     else:
         fig = px.bar(
             data_frame=df,
-            x='jurisdiccion_nombre',
-            y='segunda_dosis_cantidad',
+            x='provincia',
+            y='segunda_dosis',
             color_discrete_sequence=['#3341FF'])  # Cambia el color de las barras
     return fig
 
@@ -92,17 +92,17 @@ def update_graph(value):
     Output('pie_graph', component_property='figure'),
     [Input('dosis-radioitems', component_property='value')])
 def update_graph_pie(value):
-    if value == 'primera_dosis_cantidad':
+    if value == 'primera_dosis':
         fig2 = px.pie(
             data_frame=df,
-            names='jurisdiccion_nombre',
-            values='primera_dosis_cantidad'
+            names='provincia',
+            values='primera_dosis'
         )
     else:
         fig2 = px.pie(
             data_frame=df,
-            names='jurisdiccion_nombre',
-            values='segunda_dosis_cantidad')
+            names='provincia',
+            values='segunda_dosis')
     return fig2
 
 
